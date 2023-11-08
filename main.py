@@ -12,6 +12,7 @@ pygame.display.set_caption("Test gaem")
 
 class Paddle:
     COLOR = WHITE
+    VEL = 4
 
     def __init__(self, x, y, width, height):
          self.x = x
@@ -21,6 +22,11 @@ class Paddle:
 
     def draw(self, win):
         pygame.draw.rect(win, self.COLOR, (self.x, self.y, self.width, self.height))
+    def move(self, up=True):
+        if up:
+            self.y -= self.VEL
+        else:
+            self.y += self.VEL
 
 def draw(win, paddles):
     win.fill(BLACK)
@@ -29,6 +35,9 @@ def draw(win, paddles):
         paddle.draw(win)
 
     pygame.display.update()
+
+def handle_paddle_movement(keys, left_paddle, right_paddle):
+    pass
 
 def main():
     run = True
@@ -45,9 +54,10 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
                 break
+        keys = pygame.key.get_pressed()
+        handle_paddle_movement(keys, left_paddle, right_paddle)
 
     pygame.quit()
-
 
 if __name__ == "__main__":
     main()
