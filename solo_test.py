@@ -13,7 +13,7 @@ pygame.display.set_caption("Solo test")
 
 class Piece:
     COLOR = PURPLE_DARK
-    VEL = 4
+    VEL = 8
     def __init__(self, x, y, width, height):
         self.x = x
         self.y = y
@@ -39,7 +39,10 @@ def draw(win, pieces):
     pygame.display.update()
 
 def handle_piece_movement(keys, first_piece, second_piece):
-    pass
+    if keys[pygame.K_w]:
+        first_piece.move(up=True)
+    if keys[pygame.K_s]:
+        first_piece.move(up=False)
 
 
 def main():
