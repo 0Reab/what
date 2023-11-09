@@ -4,12 +4,26 @@ pygame.init()
 BLACK = (0,0,0)
 PURPLE = (130, 25, 50)
 PURPLE_DARK = (55,10,20)
+WHITE = (220, 210, 210)
 
 WIDTH, HEIGHT = 700, 500
 FPS = 60
+K = 0.05
 PIECE_WIDTH, PIECE_HEIGHT = 40, 40
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Solo test")
+
+class Obstacle:
+    COLOR = WHITE
+    VEL = 4
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+
+    def draw(self, win):
+        pygame.draw.rect(win, self.COLOR)
 
 class Piece:
     COLOR = PURPLE_DARK
