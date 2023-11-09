@@ -7,12 +7,13 @@ PURPLE_DARK = (55,10,20)
 
 WIDTH, HEIGHT = 700, 500
 FPS = 60
-PIECE_WIDTH, PIECE_HEIGHT = 20, 20
+PIECE_WIDTH, PIECE_HEIGHT = 40, 40
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Solo test")
 
 class Piece:
     COLOR = PURPLE_DARK
+    VEL = 4
     def __init__(self, x, y, width, height):
         self.x = x
         self.y = y
@@ -22,6 +23,12 @@ class Piece:
     def draw(self, win):
         pygame.draw.rect(win, self.COLOR, (self.x, self.y, self.width, self.height))
 
+    def move(self, up=True):
+        if up:
+            self.y -= self.VEL
+        else:
+            self.y += self.VEL
+
 
 def draw(win, pieces):
     win.fill(PURPLE)
@@ -30,6 +37,9 @@ def draw(win, pieces):
         piece.draw(win)
 
     pygame.display.update()
+
+def handle_piece_movement(keys, first_piece, second_piece):
+    pass
 
 
 def main():
@@ -47,6 +57,8 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
                 break
+        keys = pygame.key.get_pressed()
+        handle_piece_movement(keys, first_piece, second_piece)
 
     pygame.quit()
 
