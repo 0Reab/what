@@ -1,7 +1,10 @@
 import pygame
+import random
 pygame.init()
 
 LIFE = 3
+CAT_DEST_X = random.randint(50, 650)
+CAT_DEST_Y = random.randint(50, 650)
 
 BLACK = (0,0,0)
 PURPLE = (130, 25, 50)
@@ -60,6 +63,8 @@ class Piece:
             self.x += self.VEL
 
 class Cat:
+    temp_x = CAT_DEST_X
+    temp_y = CAT_DEST_Y
     COLOR = WHITE
     VEL = 4
     def __init__(self, x, y, width, height):
@@ -71,6 +76,21 @@ class Cat:
     def draw(self, win):
         pygame.Surface.blit(win, cat_img, (self.x-80, self.y-85, self.width, self.height))
         #pygame.draw.rect(win, self.COLOR, (self.x, self.y, self.width, self.height))
+
+    def move(self):
+
+        if self.x < self.temp_x:
+            self.x += 3
+        if self.x > self.temp_x:
+            self.x -= 3
+
+        if self.y > self.temp_x:
+            self.y -= 3
+        if self.y < self.temp_y:
+            self.y += 3
+
+        # self.x = self.temp_x
+        # self.y = self.temp_y
 
 def draw(win, pieces, obstacles, cats):
     win.blit(bg_img,(0,0))
@@ -96,6 +116,13 @@ def handle_piece_movement(keys, first_piece):
     if keys[pygame.K_d]:
         first_piece.move(left=False, up=None)
 
+def handle_cat_movement(first_cat):
+    temp_x = CAT_DEST_X
+    temp_y = CAT_DEST_Y
+    first_cat.move()
+
+def collision_check(body1=(), body2=()):
+    pass
 
 def main():
     clock = pygame.time.Clock()
@@ -116,7 +143,9 @@ def main():
                 run = False
                 break
         keys = pygame.key.get_pressed()
+
         handle_piece_movement(keys, first_piece)
+        handle_cat_movement(first_cat)
 
     pygame.quit()
 
