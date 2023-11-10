@@ -1,18 +1,25 @@
 import pygame
 pygame.init()
 
+LIFE = 3
+
 BLACK = (0,0,0)
 PURPLE = (130, 25, 50)
 PURPLE_DARK = (55,10,20)
 WHITE = (220, 210, 210)
 
-WIDTH, HEIGHT = 700, 500
+WIDTH, HEIGHT = 900, 700
 FPS = 60
 K = 0.05
-PIECE_WIDTH, PIECE_HEIGHT = 40, 40
+PIECE_WIDTH, PIECE_HEIGHT = 30, 20
 OBSTACLE_WIDTH, OBSTACLE_HEIGHT = 20, 90
 
 mouse_img = pygame.image.load("mouse.png")
+mouse_img = pygame.transform.scale(mouse_img, (90,90))
+cat_img = pygame.image.load("cat.png")
+cat_img = pygame.transform.scale(cat_img, (90,90))
+bg_img = pygame.image.load("bg.png")
+# bg_img = pygame.transform.scale(bg_img, (900,700))
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Solo test")
@@ -39,8 +46,8 @@ class Piece:
         self.height = height
 
     def draw(self, win):
-        pygame.Surface.blit(win, mouse_img, (self.x, self.y, self.width, self.height))
-        pygame.draw.rect(win, self.COLOR, (self.x, self.y, self.width, self.height))
+        pygame.Surface.blit(win, mouse_img, (self.x-30, self.y-28, self.width, self.height))
+        #pygame.draw.rect(win, self.COLOR, (self.x, self.y, self.width, self.height))
 
     def move(self, up=True, left=True):
         if up == True:
@@ -52,9 +59,20 @@ class Piece:
         if left == False:
             self.x += self.VEL
 
+class Cat:
+    VEL = 4
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+
+    def draw(self, win):
+        pygame.Surface.blit(win, mouse_img, (self.x-30, self.y-28, self.width, self.height))
+        #pygame.draw.rect(win, self.COLOR, (self.x, self.y, self.width, self.height))
 
 def draw(win, pieces, obstacles):
-    win.fill(PURPLE)
+    win.blit(bg_img,(0,0))
 
     for piece in pieces:
         piece.draw(win)
@@ -64,7 +82,7 @@ def draw(win, pieces, obstacles):
 
     pygame.display.update()
 
-def handle_piece_movement(keys, first_piece, second_piece):
+def handle_piece_movement(keys, first_piece):
     if keys[pygame.K_w]:
         first_piece.move(up=True, left=None)
     if keys[pygame.K_s]:
@@ -80,20 +98,20 @@ def main():
     run = True
 
     first_piece = Piece(10, HEIGHT//2 - PIECE_HEIGHT//2, PIECE_WIDTH, PIECE_HEIGHT)
-    second_piece = Piece(WIDTH - 10 - PIECE_WIDTH, HEIGHT // 2 - PIECE_HEIGHT // 2, PIECE_WIDTH, PIECE_HEIGHT)
+    #second_piece = Piece(WIDTH - 10 - PIECE_WIDTH, HEIGHT // 2 - PIECE_HEIGHT // 2, PIECE_WIDTH, PIECE_HEIGHT)
 
     first_obstacle = Obstacle(500, HEIGHT//2 - OBSTACLE_HEIGHT//2, OBSTACLE_WIDTH, OBSTACLE_HEIGHT)
 
     while run:
         clock.tick(FPS)
-        draw(WIN, [first_piece, second_piece], [first_obstacle])
+        draw(WIN, [first_piece], [first_obstacle])
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
                 break
         keys = pygame.key.get_pressed()
-        handle_piece_movement(keys, first_piece, second_piece)
+        handle_piece_movement(keys, first_piece)
 
     pygame.quit()
 
