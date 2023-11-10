@@ -40,14 +40,14 @@ class Piece:
         pygame.draw.rect(win, self.COLOR, (self.x, self.y, self.width, self.height))
 
     def move(self, up=True, left=True):
-        if up:
+        if up == True:
             self.y -= self.VEL
-        else:
+        if up == False:
             self.y += self.VEL
-        # if left:
-        #     self.x -= self.VEL
-        # else:
-        #     self.x += self.VEL
+        if left == True:
+            self.x -= self.VEL
+        if left == False:
+            self.x += self.VEL
 
 
 def draw(win, pieces, obstacles):
@@ -63,13 +63,13 @@ def draw(win, pieces, obstacles):
 
 def handle_piece_movement(keys, first_piece, second_piece):
     if keys[pygame.K_w]:
-        first_piece.move(up=True)
+        first_piece.move(up=True, left=None)
     if keys[pygame.K_s]:
-        first_piece.move(up=False)
-    # if keys[pygame.K_a]:
-    #     first_piece.move(left=True)
-    # if keys[pygame.K_d]:
-    #     first_piece.move(left=False)
+        first_piece.move(up=False, left=None)
+    if keys[pygame.K_a]:
+        first_piece.move(left=True, up=None)
+    if keys[pygame.K_d]:
+        first_piece.move(left=False, up=None)
 
 
 def main():
