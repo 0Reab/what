@@ -12,6 +12,8 @@ K = 0.05
 PIECE_WIDTH, PIECE_HEIGHT = 40, 40
 OBSTACLE_WIDTH, OBSTACLE_HEIGHT = 20, 90
 
+mouse_img = pygame.image.load("mouse.png")
+
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Solo test")
 
@@ -37,6 +39,7 @@ class Piece:
         self.height = height
 
     def draw(self, win):
+        pygame.Surface.blit(win, mouse_img, (self.x, self.y, self.width, self.height))
         pygame.draw.rect(win, self.COLOR, (self.x, self.y, self.width, self.height))
 
     def move(self, up=True, left=True):
