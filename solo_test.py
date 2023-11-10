@@ -17,7 +17,7 @@ OBSTACLE_WIDTH, OBSTACLE_HEIGHT = 20, 90
 mouse_img = pygame.image.load("mouse.png")
 mouse_img = pygame.transform.scale(mouse_img, (90,90))
 cat_img = pygame.image.load("cat.png")
-cat_img = pygame.transform.scale(cat_img, (90,90))
+cat_img = pygame.transform.scale(cat_img, (190,190))
 bg_img = pygame.image.load("bg.png")
 # bg_img = pygame.transform.scale(bg_img, (900,700))
 
@@ -60,6 +60,7 @@ class Piece:
             self.x += self.VEL
 
 class Cat:
+    COLOR = WHITE
     VEL = 4
     def __init__(self, x, y, width, height):
         self.x = x
@@ -68,10 +69,10 @@ class Cat:
         self.height = height
 
     def draw(self, win):
-        pygame.Surface.blit(win, mouse_img, (self.x-30, self.y-28, self.width, self.height))
+        pygame.Surface.blit(win, cat_img, (self.x-80, self.y-85, self.width, self.height))
         #pygame.draw.rect(win, self.COLOR, (self.x, self.y, self.width, self.height))
 
-def draw(win, pieces, obstacles):
+def draw(win, pieces, obstacles, cats):
     win.blit(bg_img,(0,0))
 
     for piece in pieces:
@@ -79,6 +80,9 @@ def draw(win, pieces, obstacles):
 
     for obstacle in obstacles:
         obstacle.draw(win)
+
+    for cat in cats:
+        cat.draw(win)
 
     pygame.display.update()
 
@@ -99,12 +103,13 @@ def main():
 
     first_piece = Piece(10, HEIGHT//2 - PIECE_HEIGHT//2, PIECE_WIDTH, PIECE_HEIGHT)
     #second_piece = Piece(WIDTH - 10 - PIECE_WIDTH, HEIGHT // 2 - PIECE_HEIGHT // 2, PIECE_WIDTH, PIECE_HEIGHT)
+    first_cat = Cat(WIDTH - 10 - PIECE_WIDTH, HEIGHT // 2 - PIECE_HEIGHT // 2, PIECE_WIDTH, PIECE_HEIGHT)
 
     first_obstacle = Obstacle(500, HEIGHT//2 - OBSTACLE_HEIGHT//2, OBSTACLE_WIDTH, OBSTACLE_HEIGHT)
 
     while run:
         clock.tick(FPS)
-        draw(WIN, [first_piece], [first_obstacle])
+        draw(WIN, [first_piece], [first_obstacle], [first_cat])
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
