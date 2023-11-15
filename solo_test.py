@@ -23,6 +23,7 @@ cat_img = pygame.image.load("cat.png")
 cat_img = pygame.transform.scale(cat_img, (190,190))
 bg_img = pygame.image.load("bg.png")
 heart_img = pygame.image.load("heart.png")
+heart_dead_img = pygame.image.load(heart_dead.png)
 # bg_img = pygame.transform.scale(bg_img, (900,700))
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -135,8 +136,19 @@ class Lives:
         self.width = width
         self.height = height
 
-    def draw(self, win):
-        pygame.Surface.blit(win, heart_img, (self.x-80, self.y-85, self.width, self.height))
+    if LIFE == 3:
+        def draw(self, win):
+            pygame.Surface.blit(win, heart_img, (self.x, self.y-330, self.width, self.height))
+            pygame.Surface.blit(win, heart_img, (self.x+35, self.y - 330, self.width, self.height))
+            pygame.Surface.blit(win, heart_img, (self.x+70, self.y - 330, self.width, self.height))
+    if LIFE == 2:
+        def draw(self, win):
+            pygame.Surface.blit(win, heart_img, (self.x, self.y-330, self.width, self.height))
+            pygame.Surface.blit(win, heart_img, (self.x+35, self.y - 330, self.width, self.height))
+    if LIFE == 1:
+        def draw(self, win):
+            pygame.Surface.blit(win, heart_img, (self.x, self.y-330, self.width, self.height))
+
 
 def main():
     clock = pygame.time.Clock()
