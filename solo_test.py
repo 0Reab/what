@@ -23,7 +23,7 @@ cat_img = pygame.image.load("cat.png")
 cat_img = pygame.transform.scale(cat_img, (190,190))
 bg_img = pygame.image.load("bg.png")
 heart_img = pygame.image.load("heart.png")
-heart_dead_img = pygame.image.load(heart_dead.png)
+heart_dead_img = pygame.image.load("heart_dead.png")
 # bg_img = pygame.transform.scale(bg_img, (900,700))
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -127,7 +127,8 @@ def handle_cat_movement(first_cat):
     first_cat.move()
 
 def collision_check(body1=(), body2=()):
-    pass
+
+    return True
 
 class Lives:
     def __init__(self, x, y, width, height):
@@ -145,9 +146,12 @@ class Lives:
         def draw(self, win):
             pygame.Surface.blit(win, heart_img, (self.x, self.y-330, self.width, self.height))
             pygame.Surface.blit(win, heart_img, (self.x+35, self.y - 330, self.width, self.height))
+            pygame.Surface.blit(win, heart_dead_img, (self.x + 70, self.y - 330, self.width, self.height))
     if LIFE == 1:
         def draw(self, win):
             pygame.Surface.blit(win, heart_img, (self.x, self.y-330, self.width, self.height))
+            pygame.Surface.blit(win, heart_dead_img, (self.x + 35, self.y - 330, self.width, self.height))
+            pygame.Surface.blit(win, heart_dead_img, (self.x + 70, self.y - 330, self.width, self.height))
 
 
 def main():
